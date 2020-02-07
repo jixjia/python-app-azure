@@ -1,339 +1,56 @@
-{% extends "template.html" %} {% block main %}
+{% extends "template.html" %}
+{% block main %}
 
 <!-- Flask & Jinjia Common Techniques -->
-<div class="container">
-  <div class="row mt-5">
-    <div class="col">
-      <h1>Flask & Jinjia Receipes</h1>
-      <p>This template contains commonly used Flask and Jinjia techniques</p>
-    </div>
-  </div>
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Your IP Address</h1>
+  <p class="font-weight-light">A simple Python app showing your IP and location</p>
 </div>
 
-<!--1. Rendering server side variables on a page -->
+<!-- Body -->
 <div class="container">
+  {% for j in output %}
   <div class="row mt-5">
-    <div class="col">
-      <h4>1. Render server side variables</h4>
-      <p>
-        Time now <code>{% if var %} {{ var }}</code>
-        {% else %} No time available {% endif %}
-      </p>
+    <!-- Client IP -->
+    <div class="col-3 font-weight-bold">
+      <p>Host Name</p>
+      <p>Your IP</p>
+      <p>Access Datetime</p>
     </div>
-  </div>
-</div>
-
-<!--2. Sending form data using AJAX and display seamlessly -->
-<div class="container">
-  <div class="row mt-5">
-    <div class="col">
-      <h4>
-        2. Send Form data using AJAX and display results without page refresh
-      </h4>
-
-      <form method="post" action="#">
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label for="form_name">Your Name</label>
-            </div>
-            <div class="col-lg-10">
-              <input
-                type="text"
-                class="form-control"
-                id="form_name"
-                placeholder="John Smith"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label for="form_gender">Gender</label>
-            </div>
-            <div class="col-lg-10">
-              <select class="custom-select" id="form_gender">
-                <option value="na" selected></option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label for="form_interests">Your Interests</label>
-            </div>
-            <div class="col-lg-10">
-              <select class="form-control" id="form_interests" multiple>
-                <option>Classical music</option>
-                <option>Gardening</option>
-                <option>Technology</option>
-                <option>Maths and Science</option>
-                <option>Movie</option>
-                <option>Cocking</option>
-                <option>Outdoor & Outback</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label for="form_textarea">Your Text</label>
-            </div>
-            <div class="col-lg-10">
-              <textarea
-                class="form-control"
-                id="form_textarea"
-                rows="3"
-              ></textarea>
-              <div class="custom-control custom-switch">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="form_anonymous"
-                  value="True"
-                />
-                <label class="custom-control-label" for="form_anonymous"
-                  >Use anonymous</label
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label for="form_role">Your Role</label>
-            </div>
-            <div class="col-lg-10">
-              <div class="custom-control custom-radio">
-                <input
-                  type="radio"
-                  id="form_role_1"
-                  name="form_role"
-                  class="custom-control-input"
-                  value="Architect"
-                  checked
-                />
-                <label class="custom-control-label" for="form_role_1"
-                  >Architect</label
-                >
-              </div>
-              <div class="custom-control custom-radio">
-                <input
-                  type="radio"
-                  id="form_role_2"
-                  name="form_role"
-                  class="custom-control-input"
-                  value="Consultant"
-                />
-                <label class="custom-control-label" for="form_role_2"
-                  >Consultant</label
-                >
-              </div>
-              <div class="custom-control custom-radio">
-                <input
-                  type="radio"
-                  id="form_role_3"
-                  name="form_role"
-                  class="custom-control-input"
-                  value="PFE"
-                />
-                <label class="custom-control-label" for="form_role_3"
-                  >PFE</label
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label>Upload Image</label>
-            </div>
-            <div class="col-lg-10">
-              <div id="dropzone" class="dragdrop" effectAllowed="move">
-                <i class="fa fa-cloud-download fa-5x" aria-hidden="true"></i>
-                Drag & Drop Image Here
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <div class="row">
-            <div class="col">
-              <label>Upload File</label>
-            </div>
-            <div class="col-lg-10">
-              <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  id="form_attachment"
-                />
-                <label class="custom-file-label" for="form_attachment"
-                  >Choose file path</label
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group row mt-5">
-          <div class="col">
-            <button
-              type="button"
-              id="form_button"
-              class="btn btn-primary btn-block rounded-pill"
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-      </form>
+    <div class="col-9">
+      <p>{{ j['host_name'] |safe }}</p>
+      <p>{{ j['your_ip'] |safe }}</p>
+      <p>{{ j['datetime'] |safe }}</p>
     </div>
   </div>
 
-  <div class="row mt-2">
-    <div class="col">
-      <img id="icon_form_result" src="" height="50px" />
-      <span id="form_result" class="ml-2"></span>
+  <div class="row">
+    <!-- Decode IP information -->
+    {% if status == '200' %}
+    <div class="col-3 font-weight-bold">
+      <p>Country</p>
+      <p>City</p>
+      <p>Post Code</p>
+      <p>Latitude</p>
+      <p>Longitude</p>
     </div>
-  </div>
-</div>
-
-<!--3. Advanced progress control using sequential AJAX -->
-<div class="container">
-  <div class="row mt-5">
-    <div class="col">
-      <h4>3. Render series of actions in Modal</h4>
-      <p>
-        This button will send three random numbers to server, each via a chained
-        asynchronous call, then wait for it to process and report the progress
-        back to the HTML Modal as it occurs in real-time.
-      </p>
+    <div class="col-9">
+      <p>{{ j['your_country'] |safe }}</p>
+      <p>{{ j['your_city'] |safe }}</p>
+      <p>{{ j['your_post_code'] |safe }}</p>
+      <p>{{ j['your_latitude'] |safe }}</p>
+      <p>{{ j['your_longitude'] |safe }}</p>
     </div>
-  </div>
-
-  <div class="row mt-3">
-    <div class="col">
-      <button
-        type="button"
-        id="modal_button"
-        class="btn btn-success btn-block rounded-pill"
-        data-toggle="modal"
-        data-target="#myModal"
-      >
-        <i class="fa fa-play-circle mr-2"></i>
-        Start
-      </button>
+    {% else %}
+    <div class="col-3 font-weight-bold">
+      <p>Message</p>
     </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div
-  class="modal fade"
-  data-backdrop="static"
-  data-keyboard="false"
-  id="myModal"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h5 class="modal-title">Modal Heading</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <!-- Progress Bar Section -->
-        <div class="progress mt-2">
-          <div
-            id="progress_bar"
-            class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-            role="progressbar"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            style="width:0%"
-          ></div>
-        </div>
-        <!-- AJAX Process Status -->
-        <div class="mt-5">
-          <div class="text-center">
-            <img
-              id="icon_modal"
-              src="../static/images/loading.gif"
-              height="50px"
-            />
-            <span id="modal_result" class="ml-2"></span>
-          </div>
-        </div>
-        <!-- Hidden Process Outputs -->
-        <div class="mt-5" id="modal_output_button">
-          <div class="row">
-            <div class="col-8">
-              <button
-                type="button"
-                id="modal_result_button"
-                class="btn btn-primary btn-block rounded-pill"
-              >
-                <i class="fa fa-external-link m-2"></i>Button
-              </button>
-            </div>
-            <div class="col-4">
-              <button
-                type="button"
-                id="modal_close"
-                class="btn btn-danger btn-block rounded-pill"
-                data-dismiss="modal"
-              >
-                <i class="fa fa-window-close m-2"></i>Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer"></div>
+    <div class="col-9">
+      <p>{{ j['error_msg'] |safe }}</p>
     </div>
+    {% endif %}
   </div>
-</div>
-
-<!--4. Stream Data -->
-<div class="container">
-  <div class="row mt-5">
-    <div class="col">
-      <h4>4. Streaming data via Pull request</h4>
-      <p>
-        This section will continuously make a pull request from server and
-        stream a random number to HTML page in real-time.
-      </p>
-    </div>
-  </div>
-
-  <div class="row mt-3">
-    <div class="col">
-      Your Random Key is shown here:
-      <code>
-        <span id="stream_console"></span>
-      </code>
-    </div>
-  </div>
+  {% endfor %}
 </div>
 
 {% endblock %}
