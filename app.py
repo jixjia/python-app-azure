@@ -24,7 +24,7 @@ def hello():
         }
 
         try:
-            geo_response = geodb.city(str(request.remote_addr))
+            geo_response = geodb.city(str(client_ip))
             client_country = geo_response.country.name
             client_postal = geo_response.postal.code
             client_city = geo_response.city.name
