@@ -17,7 +17,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   # Environment name
-  environmentName: 'jixjia125'
+  environmentName: 'PROD'
 
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
@@ -39,14 +39,17 @@ stages:
             displayName: 'Use Python $(pythonVersion)'
 
           - script: |
-              python -m venv antenv
-              source antenv/bin/activate
+              python -m venv antenv$(pythonVersion)
+              source antenv$(pythonVersion)/bin/activate
               python -m pip install --upgrade pip
               pip install setup
               pip install -r requirements.txt
             workingDirectory: $(projectRoot)
             displayName: 'Install requirements'
-
+          - task: CmdLine@2
+            inputs:
+              script: 'rm -rf .git'
+              workingDirectory: '$(projectRoot)'
           - task: ArchiveFiles@2
             displayName: 'Archive files'
             inputs:
@@ -55,13 +58,13 @@ stages:
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
               replaceExistingArchive: true
-
+          
           - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             displayName: 'Upload package'
             artifact: drop
 
-  - stage: Deploy
-    displayName: 'Deploy Web App'
+  - stage: Deploy PROD
+    displayName: 'Deploy Web App to PROD'
     dependsOn: Build
     condition: succeeded()
     jobs:
@@ -79,8 +82,9 @@ stages:
                   displayName: 'Use Python version'
 
                 - task: AzureWebApp@1
-                  displayName: 'Deploy Azure Web App : jixjia125'
+                  displayName: 'Deploy Web App: $(webAppName)'
                   inputs:
                     azureSubscription: $(azureServiceConnectionId)
                     appName: $(webAppName)
                     package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+                    appType: webAppLinux
