@@ -13,7 +13,7 @@ def hello():
     if request.method == 'POST':
         abort(400, {'message': 'Please use GET to access this endpoint'})
     else:
-        client_ip = request.remote_addr
+        client_ip = request.environ['REMOTE_ADDR']
         host_name = socket.gethostname()
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         result = {

@@ -27,7 +27,7 @@ variables:
 
 stages:
   - stage: Build
-    displayName: Build stage
+    displayName: 'Build stage'
     jobs:
       - job: BuildJob
         pool:
@@ -58,7 +58,7 @@ stages:
               archiveType: zip
               archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
               replaceExistingArchive: true
-          
+
           - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             displayName: 'Upload package'
             artifact: drop
