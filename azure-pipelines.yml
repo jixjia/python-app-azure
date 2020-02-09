@@ -46,10 +46,6 @@ stages:
               pip install -r requirements.txt
             workingDirectory: $(projectRoot)
             displayName: 'Install requirements'
-          - task: CmdLine@2
-            inputs:
-              script: 'rm -rf .git'
-              workingDirectory: '$(projectRoot)'
 
           - task: ArchiveFiles@2
             displayName: 'Archive files'
