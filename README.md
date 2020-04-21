@@ -2,7 +2,7 @@
 
 A Python web app that retrieves your public IP and associated geographic information. 
 
-![Find My IP Screenshot](https://jixjiastorage.blob.core.windows.net/blog-resources/deploy-python-on-azure/complete.gif)
+![Find My IP Screenshot](https://jixjia.files.wordpress.com/2020/04/complete.gif)
 
 This app is also part of tutorial demonstrating how to publish (any) Python app to Azure using:    
 (1) KUDU app builder service, or     
